@@ -1,0 +1,61 @@
+html {
+    background: #DFDFE5;
+    width: 100%;
+    font-family: 'Rec Mono Casual';
+}
+
+.my_navbar {
+    border-bottom-style: solid;
+    border-color: #501b55;
+    width: 93%;
+    margin: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.nav_element {
+    color: black;
+    text-decoration: none;
+    padding: 15px 30px;
+    box-sizing: border-box;
+    background: #74106E91;
+    border-radius: 5px;
+}
+
+.nav_element:hover {
+    color: #cb73d3;
+    background: #3a133d;
+}
+
+.container {
+    color: black;
+    width: 88%;
+    margin: auto;
+    padding: 10px 15px;
+    box-sizing: border-box;
+}
+
+.messages {
+    text-align: center;
+}
+
+.messages-success {
+    padding: 15px;
+    border-radius: 15px;
+    background: #4ce575;
+    margin-bottom: -17px;
+}
+
+.messages-error {
+    padding: 15px;
+    border-radius: 15px;
+    background: red;
+    margin-bottom: -17px;
+}
+
+li {
+    list-style: none;
+}

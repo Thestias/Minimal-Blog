@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block new_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/blog_like_styling.css' %}">
+
+{% endblock %}
+
+{% block content_1 %}
+<h1>{{user}}'s Profile</h1>
+
+<ul>
+    {% for blog in blogs_by_user %}
+        <li style="margin-bottom: 10px;"><a style='font-size:20px' href="/{{blog.0}}">{{blog.1}}</a> <small>{{blog.2}}</small></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

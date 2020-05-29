@@ -1,0 +1,43 @@
+p, h1{
+    color: #7b3875;
+}
+
+p {
+    line-height: 1.8rem;
+    font-size: 18px;
+}
+
+h1, h2, h3, h4, h5 {
+    line-height: 1.6rem;
+    border-bottom-style: solid;
+    border-bottom-color: black;
+}
+
+.blog_links {
+    margin-top: 2%;
+    font-size: 20px;
+}
+.blog_links a {
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    align-items: center;
+    padding-bottom: 5px;
+}
+
+.blog_links a:hover {
+    color: hotpink;
+}
+
+small {
+    display: inline-block;
+    font-size: 14px;
+}
+
+.container {
+    padding: 0px 17px;
+    border-style: solid;
+    border-color: #501b55;
+    border-width: 4px;
+    margin-top: 3%;
+}

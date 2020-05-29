@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block new_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/homepage.css' %}">
+
+{% endblock %}
+{% block content_1 %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <b><li{% if message.tags %} class="messages-{{ message.tags }}"{% endif %}>{{ message }}</li></b>
+    {% endfor %}
+</ul>
+{% endif %}
+<div class='blog_links'>
+    <h3>Blogs</h3>
+    {% for blog in dict_blogs %}
+        <ul>
+            <li>
+                <a href="{% url 'blog_id' blog.id %}">{{blog.title}}</a>
+                <small>Author: {{blog.user}} - Date: {{blog.created_time}}</small>
+            </li>
+        </ul>
+    {% endfor %}
+</div>
+{% endblock %}

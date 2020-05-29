@@ -1,0 +1,27 @@
+textarea {
+    background: #f8f8f8;
+}
+
+.preview {
+    text-align: center;
+    border-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mark_preview {
+    border-style: solid;
+    border-width: 4px;
+    border-color: black;
+    padding: 12px;
+}
+
+#button_write_blog {
+    font-family: "Rec Mono Casual";
+    margin-top: 10px;
+    font-size: 16px
+}
+
+.label_title {
+    display: inline-block;
+}

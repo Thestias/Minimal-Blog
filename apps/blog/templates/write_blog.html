@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block new_css %}
+
+<script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+
+<script type="text/javascript" src="{% static 'js/mark_renderer_to_html.js' %}"></script>
+
+<link rel="stylesheet" href="{% static 'css/blog_like_styling.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/write_blog.css' %}">
+
+{% endblock %}
+{% block content_1 %}
+<form method="POST" action="">
+    {% csrf_token %}
+    <label class="label_title">Title</label>
+    {% if markdown_text %}
+        <input type="text" required name="title" class="write_input_title" value='{{blog_title}}'>
+        <textarea required name='markdownText' cols="110" rows='10' class="blog_write_textarea">{{markdown_text}}</textarea>
+    {% else %}
+        <input type="text" required name="title" class="write_input_title">
+        <textarea required name='markdownText' cols="110" rows='10' class="blog_write_textarea"></textarea>
+    <!-- <button class="nav_element" style='font-family: "Rec Mono Casual"; margin-top: 10px; font-size: 16px'>Submit</button> -->
+    {% endif %}
+    <button class="nav_element" id='button_write_blog'>Submit</button>
+
+</form>
+
+<h2 class='preview'>Preview</h2>
+<div class="mark_preview">
+
+</div>
+
+{% endblock %}
+
