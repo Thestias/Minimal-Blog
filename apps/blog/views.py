@@ -1,29 +1,45 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from .models import BlogPost
 from datetime import datetime
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+
+from django.views import View
 
 # Create your views here.
 
 
-@require_http_methods(['GET'])
-def about(request):
-    return render(request, template_name='about.html')
+@method_decorator(login_required, name='dispatch')
+class login_req(View):
+    pass
+
+class common_methods():
+
+    def http_method_not_allowed(self, request):
+        return HttpResponse('<h1>403 - Forbidden</h1>')
+
+##
+
+class About(common_methods, View):
+
+    def get(self, request):
+        return render(request, template_name='about.html')
 
 
-@require_http_methods(['GET', 'POST'])
-@login_required
-def profile(request):
-    b = BlogPost.objects.filter(user=request.user).values_list(
-        'id', 'title', 'created_time')
-    return render(request, template_name='profile.html', context={'blogs_by_user': b})
+class Profile(login_req, common_methods, View):
+
+    def get(self, request):
+        b = BlogPost.objects.filter(user=request.user).values_list(
+            'id', 'title', 'created_time')
+        return render(request, template_name='profile.html', context={'blogs_by_user': b})
 
 
 @require_http_methods(["GET", "POST"])
 @login_required
 def edit_blog(request, blog_id):
+    #  WAY Easier to let this one be.
     blog_post = get_object_or_404(BlogPost, id=blog_id)
     if request.method == 'POST':
         data = request.POST
@@ -38,28 +54,35 @@ def edit_blog(request, blog_id):
         return render(request, template_name='write_blog.html', context=context)
 
 
-@require_http_methods(['GET'])
-def blog_id(request, blog_id):
-    blog_post = get_object_or_404(BlogPost, id=blog_id)
-    context = {'markdown_text': blog_post.text_mark,
-               'blog_id': blog_post.id, 'blog_author': blog_post.user}
-    return render(request, template_name='blog.html', context=context)
+class BlogId(common_methods, View):
+
+    def get(self, request, blog_id):
+        blog_post = get_object_or_404(BlogPost, id=blog_id)
+        context = {'markdown_text': blog_post.text_mark,
+                   'blog_id': blog_post.id, 'blog_author': blog_post.user}
+        return render(request, template_name='blog.html', context=context)
 
 
-@require_http_methods(['GET'])
-def homepage(request):
-    dict_blogs = {}
-    blog_posts = BlogPost.objects.all()
-    for blogObject in blog_posts:
-        dict_blogs[blogObject.id] = blogObject.title
+class Homepage(common_methods, View):
 
-    return render(request, 'homepage.html', context={'dict_blogs': blog_posts})
+    def get(self, request):
+        '''
+        Lists all Blogs!
+        '''
+        dict_blogs = {}
+        blog_posts = BlogPost.objects.all().order_by('-created_time')  # -created_time  descending order
+        for blogObject in blog_posts:
+            dict_blogs[blogObject.id] = blogObject.title
+
+        return render(request, 'homepage.html', context={'dict_blogs': blog_posts})
 
 
-@require_http_methods(['GET', 'POST'])
-@login_required
-def new_blog(request):
-    if request.method == 'POST':
+class NewBlog(common_methods, login_req, View):
+
+    def get(self, request):
+        return render(request, template_name='new_blog.html')
+
+    def post(self, request):
         f = (request.FILES['file'])
         post_title = request.POST['title']
         file_read = f.read()
@@ -70,13 +93,13 @@ def new_blog(request):
         b.save()
         messages.success(request, 'Blog Uploaded!')
         return redirect('homepage')
-    return render(request, template_name='new_blog.html')
 
 
-@require_http_methods(['GET', 'POST'])
-@login_required
-def write_blog(request):
-    if request.method == 'POST':
+class WriteBlog(common_methods, login_req, View):
+    def get(self, request):
+        return render(request, template_name='write_blog.html')
+
+    def post(self, request):
         data = request.POST
         dt_string = get_timestamp()
         b = BlogPost(title=data['title'],
@@ -84,7 +107,6 @@ def write_blog(request):
         b.save()
         messages.success(request, 'Blog Created!')
         return redirect('homepage')
-    return render(request, template_name='write_blog.html')
 
 
 def get_timestamp():
