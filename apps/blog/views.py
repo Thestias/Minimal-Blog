@@ -5,9 +5,9 @@ from .models import BlogPost
 from datetime import datetime
 from django.contrib import messages
 from django.utils.decorators import method_decorator
-
+from django.template.loader import get_template, TemplateDoesNotExist
 from django.views import View
-
+from django.http import Http404
 # Create your views here.
 
 
@@ -23,7 +23,18 @@ class common_methods():
 
     def get(self, request):
         ''' Simple GET method to keep code DRY '''
-        return render(request, template_name=self.template_name)
+        try:
+            get_template(self.template_name)
+
+        except TemplateDoesNotExist:
+            # MSG Shown only when not in production.
+            raise Http404('404 - TemplateDoesNotExist')
+
+        except Exception as e:
+            return HttpResponse('<h1>500 - Internal Server Error.</h1>', status=500)
+
+        else:
+            return render(request, template_name=self.template_name)
 
     def http_method_not_allowed(self, request):
         return HttpResponse('<h1>403 - Forbidden</h1>')
