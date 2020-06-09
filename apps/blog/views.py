@@ -13,9 +13,17 @@ from django.views import View
 
 @method_decorator(login_required, name='dispatch')
 class login_req(View):
+
+    ''' A common Class For all Views that use login_redquired ! '''
     pass
 
 class common_methods():
+
+    ''' A common Class For all Views '''
+
+    def get(self, request):
+        ''' Simple GET method to keep code DRY '''
+        return render(request, template_name=self.template_name)
 
     def http_method_not_allowed(self, request):
         return HttpResponse('<h1>403 - Forbidden</h1>')
@@ -24,8 +32,7 @@ class common_methods():
 
 class About(common_methods, View):
 
-    def get(self, request):
-        return render(request, template_name='about.html')
+    template_name = 'about.html'
 
 
 class Profile(login_req, common_methods, View):
@@ -70,7 +77,8 @@ class Homepage(common_methods, View):
         Lists all Blogs!
         '''
         dict_blogs = {}
-        blog_posts = BlogPost.objects.all().order_by('-created_time')  # -created_time  descending order
+        blog_posts = BlogPost.objects.all().order_by(
+            '-created_time')  # -created_time  descending order
         for blogObject in blog_posts:
             dict_blogs[blogObject.id] = blogObject.title
 
@@ -79,8 +87,7 @@ class Homepage(common_methods, View):
 
 class NewBlog(common_methods, login_req, View):
 
-    def get(self, request):
-        return render(request, template_name='new_blog.html')
+    template_name = 'new_blog.html'
 
     def post(self, request):
         f = (request.FILES['file'])
@@ -96,8 +103,8 @@ class NewBlog(common_methods, login_req, View):
 
 
 class WriteBlog(common_methods, login_req, View):
-    def get(self, request):
-        return render(request, template_name='write_blog.html')
+
+    template_name = 'write_blog.html'
 
     def post(self, request):
         data = request.POST
@@ -110,6 +117,8 @@ class WriteBlog(common_methods, login_req, View):
 
 
 def get_timestamp():
+    ''' Used to add a timestamp when creating a blog'''
+
     now = datetime.now()
     dt_string = now.strftime("%Y/%m/%d %H:%M")
 
