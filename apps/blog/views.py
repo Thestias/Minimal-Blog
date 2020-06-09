@@ -21,8 +21,12 @@ class common_methods():
 
     ''' A common Class For all Views '''
 
-    def get(self, request):
+    context = {}
+
+    def get(self, request, blog_id=None):
         ''' Simple GET method to keep code DRY '''
+        self.blog_id = blog_id  # Just to satisfy BlogId View
+        self.request = request  # Just to satisfy Profile View
         try:
             get_template(self.template_name)
 
@@ -34,7 +38,8 @@ class common_methods():
             return HttpResponse('<h1>500 - Internal Server Error.</h1>', status=500)
 
         else:
-            return render(request, template_name=self.template_name)
+            print(self.context, type(self.context))
+            return render(request, template_name=self.template_name, context=self.context)
 
     def http_method_not_allowed(self, request):
         return HttpResponse('<h1>403 - Forbidden</h1>')
@@ -48,14 +53,20 @@ class About(common_methods, View):
 
 class Profile(login_req, common_methods, View):
 
-    def get(self, request):
-        b = BlogPost.objects.filter(user=request.user).values_list(
+    template_name = 'profile.html'
+
+    @property
+    def get_user_blogs(self):
+        b = BlogPost.objects.filter(user=self.request.user).values_list(
             'id', 'title', 'created_time')
-        return render(request, template_name='profile.html', context={'blogs_by_user': b})
+
+        return {'blogs_by_user': b}
+
+    context = get_user_blogs
 
 
-@require_http_methods(["GET", "POST"])
-@login_required
+@ require_http_methods(["GET", "POST"])
+@ login_required
 def edit_blog(request, blog_id):
     #  WAY Easier to let this one be.
     blog_post = get_object_or_404(BlogPost, id=blog_id)
@@ -74,26 +85,29 @@ def edit_blog(request, blog_id):
 
 class BlogId(common_methods, View):
 
-    def get(self, request, blog_id):
-        blog_post = get_object_or_404(BlogPost, id=blog_id)
-        context = {'markdown_text': blog_post.text_mark,
-                   'blog_id': blog_post.id, 'blog_author': blog_post.user}
-        return render(request, template_name='blog.html', context=context)
+    template_name = 'blog.html'
+
+    @property
+    def get_blog_content(self):
+        blog_post = get_object_or_404(BlogPost, id=self.blog_id)
+        blog_content = {'markdown_text': blog_post.text_mark,
+                        'blog_id': blog_post.id, 'blog_author': blog_post.user}
+        return blog_content
+
+    context = get_blog_content
 
 
 class Homepage(common_methods, View):
 
-    def get(self, request):
-        '''
-        Lists all Blogs!
-        '''
-        dict_blogs = {}
+    template_name = 'homepage.html'
+
+    @property
+    def get_all_blog_list(self):
         blog_posts = BlogPost.objects.all().order_by(
             '-created_time')  # -created_time  descending order
-        for blogObject in blog_posts:
-            dict_blogs[blogObject.id] = blogObject.title
+        return {'dict_blogs': blog_posts}
 
-        return render(request, 'homepage.html', context={'dict_blogs': blog_posts})
+    context = get_all_blog_list
 
 
 class NewBlog(common_methods, login_req, View):
