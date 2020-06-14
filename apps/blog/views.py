@@ -38,7 +38,6 @@ class common_methods():
             return HttpResponse('<h1>500 - Internal Server Error.</h1>', status=500)
 
         else:
-            print(self.context, type(self.context))
             return render(request, template_name=self.template_name, context=self.context)
 
     def http_method_not_allowed(self, request):
@@ -133,18 +132,8 @@ class WriteBlog(common_methods, login_req, View):
 
     def post(self, request):
         data = request.POST
-        dt_string = get_timestamp()
         b = BlogPost(title=data['title'],
-                     text_mark=data['markdownText'], created_time=dt_string, user=request.user)
+                     text_mark=data['markdownText'], created_time=BlogPost.get_timestamp(self), user=request.user)
         b.save()
         messages.success(request, 'Blog Created!')
         return redirect('homepage')
-
-
-def get_timestamp():
-    ''' Used to add a timestamp when creating a blog'''
-
-    now = datetime.now()
-    dt_string = now.strftime("%Y/%m/%d %H:%M")
-
-    return dt_string
