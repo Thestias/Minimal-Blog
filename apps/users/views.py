@@ -16,4 +16,4 @@ def register(request):
             return redirect('login')
     else:
         register_form = RegisterForm()
-        return render(request, template_name='register.html', context={'register_form': register_form})
+    return render(request, template_name='register.html', context={'register_form': register_form})

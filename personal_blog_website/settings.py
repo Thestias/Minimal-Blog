@@ -23,7 +23,7 @@ SECRET_KEY = '5r^e#o=b!6d(#2x5df6b&#k$s77t68awr+ph-(sgjqsp9qqry6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = []
 
 LOGIN_URL = '/login'
 
