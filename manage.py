@@ -5,7 +5,8 @@ import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'personal_blog_website.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+                          'personal_blog_website.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
