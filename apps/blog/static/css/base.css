@@ -1,7 +1,7 @@
 html {
     background: #DFDFE5;
     width: 100%;
-    font-family: 'Rec Mono Casual';
+    font-family: 'Alegreya', serif;
 }
 
 .my_navbar {
@@ -17,6 +17,8 @@ html {
 }
 
 .nav_element {
+    font-family: 'Alegreya', serif;
+    font-size: 20px;
     color: black;
     text-decoration: none;
     padding: 15px 30px;
@@ -58,4 +60,12 @@ html {
 
 li {
     list-style: none;
+}
+
+label {
+    font-size: 20px;
+}
+
+h1 h2 h3 h4 h5 h6 {
+    font-family: 'Playfair Display', serif;
 }
