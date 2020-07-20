@@ -17,6 +17,7 @@ class login_req(View):
     ''' A common Class For all Views that use login_redquired ! '''
     pass
 
+
 class common_methods():
 
     ''' A common Class For all Views '''
@@ -44,6 +45,7 @@ class common_methods():
         return HttpResponse('<h1>403 - Forbidden</h1>')
 
 ##
+
 
 class About(common_methods, View):
 

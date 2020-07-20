@@ -4,11 +4,12 @@
 
 {% block new_css %}
 
-<!-- <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
- -->
-<script type="text/javascript" src="{% static 'js/toc_handler.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+
+<script type="text/javascript" src="{% static 'js/toc_handler_blog_render.js' %}"></script>
 
 <link rel="stylesheet" href="{% static 'css/blog_like_styling.css' %}">
+
 
 {% endblock %}
 
@@ -18,7 +19,7 @@
     {% if blog_author == user %}
         <a href="/edit/{{blog_id}}" class="nav_element" style="float: right; margin-top: 15px">Edit</a>
     {% endif %}
-    {{ markdown_text|markdownify }}
-
+    <div class='toDisplay'></div>
+    <div class='toRender' style="display: none">{{markdown_text}}</div>
 
 {% endblock %}
