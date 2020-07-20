@@ -22,7 +22,7 @@ input {
     margin: 0;
 }
 
-input:focus {
+input:focus input:select {
     border-style: none;
     border-bottom: 3px solid #3a133d;
 }
