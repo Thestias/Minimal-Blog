@@ -10,15 +10,15 @@ This is a very minimal blog. You can upload blogs or write(with live-preview) an
 
 ## Screenshots
 
-+ Homepage
++ **Homepage**
 ![Screenshots](https://i.imgur.com/k4rNBgg.png)
 
-+ Upload or Write Blog
++ **Upload or Write Blog**
 ![UploadWriteBlog](https://i.imgur.com/lpuwUfC.png)
 
-+ Blog Uploaded / Added
++ **Blog Uploaded / Added**
 ![UploadWriteBlog](https://i.imgur.com/KCE2FLa.png)
 
-+ Login
++ **Login**
 ![Login](https://i.imgur.com/CpBptos.png)
 
