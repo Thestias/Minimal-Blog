@@ -1,5 +1,3 @@
-@import "base.css";
-
 hr {
     margin: 1.3rem 3rem;
     color: var(--border);
@@ -11,6 +9,10 @@ hr {
     font-weight: bold;
     text-transform: uppercase;
 }
+
+.post-header li a {color: var(--alt-text); text-decoration: none;}
+.post-header li a:hover {color: var(--button)}
+
 
 .post-list, .post-header {list-style: none;}
 .post .anchor-headline {font-size: 1.4em;}
