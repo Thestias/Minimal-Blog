@@ -27,3 +27,7 @@ def register(request):
 
 def profile(request):
     return render(request, 'profile.html')
+
+
+def upload_blog(request):
+    return render(request, 'upload_blog.html')

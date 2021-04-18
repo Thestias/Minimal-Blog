@@ -20,6 +20,8 @@ from . import views
 urlpatterns = [
     path('', views.homepage, name='Home'),
 
+    path('blogup', views.upload_blog, name='UpBlog'),
+
     path('login/', auth_views.LoginView.as_view(template_name='login_register.html',
                                                 redirect_authenticated_user=True), name='Login'),
     path('logout/', auth_views.LogoutView.as_view(), name='Logout'),

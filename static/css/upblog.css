@@ -1,0 +1,11 @@
+article {
+    text-align: center;
+}
+
+article h2 {margin-bottom: 2rem;}
+
+article input {
+    background-color: var(--background);
+    border: 2px solid var(--button);
+    padding: 20px;
+}
