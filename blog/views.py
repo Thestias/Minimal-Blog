@@ -11,7 +11,7 @@ def homepage(request):
 
 def register(request):
     if request.user.is_authenticated:
-        return redirect('profile')
+        return redirect('Profile')
 
     if request.method == 'POST':
         register_form = CustomUserCreation(request.POST)
@@ -23,3 +23,7 @@ def register(request):
     else:
         register_form = CustomUserCreation()
     return render(request, 'login_register.html', context={'form': register_form})
+
+
+def profile(request):
+    return render(request, 'profile.html')
