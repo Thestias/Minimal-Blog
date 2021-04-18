@@ -1,0 +1,40 @@
+form {
+    text-align: center;
+    font-weight: 800;
+}
+
+.label, .label-wrapper {margin: 1rem 0}
+
+.label {
+    display: block;
+}
+
+form input {
+    background-color: var(--background);
+    color: var(--headline);
+    border-style: none;
+    border-bottom: 2px solid var(--border);
+    padding: 2px;
+}
+
+form input:focus {
+    outline: none;
+    border-bottom: 2px solid var(--button)
+}
+
+.button {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    background-color: var(--alt-text);
+    margin-top: 20px;
+    padding: 10px 50px;
+    border: 2px solid var(--border);
+    border-radius: 7px;
+}
+
+.button:hover {
+    background-color: var(--button);
+    cursor: pointer;
+    color: var(--background)
+}

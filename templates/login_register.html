@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/login_register.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<article>
+
+    <form method="POST">
+        {% csrf_token %}
+        <!-- Form Rendering!! -->
+        {% for field in form %}
+        <div class="label-wrapper">
+            <label class="label" for="{{field.id_for_label}}">{{field.label}}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <button class="button">Login</button>
+    </form>
+</article>
+
+{% endblock %}
