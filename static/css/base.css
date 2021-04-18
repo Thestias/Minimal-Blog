@@ -15,10 +15,11 @@ html { font-family: 'Inter', sans-serif; }
 
 body {
     background-color: var(--background);
+    color: var(--headline)
 }
 
-.navbar a {color: var(--headline); font-weight: 900; text-decoration: none;}
-.navbar a:hover { color: var(--button)}
+.anchor-headline {font-family: 'Antonio', sans-serif; color: var(--headline); font-weight: 900; text-decoration: none;}
+.anchor-headline:hover { color: var(--button)}
 
 .navbar {
     display: flex;
@@ -34,4 +35,10 @@ body {
     border-style: none;
     border-bottom: 2px solid var(--border);
     padding: 2px;
+}
+
+main {
+    max-width: 54rem;
+    width: 100%;
+    margin: 3rem auto;
 }

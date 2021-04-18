@@ -9,19 +9,23 @@
     <title></title>
 
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&display=swap" rel="stylesheet">
     {% block css %}{% endblock %}
 
 </head>
 
 <body>
     <div class="navbar">
-        <a href="http://" target="_blank" rel="noopener noreferrer">Piccolo</a>
+        <a href="#" target="_blank" class="anchor-headline">Piccolo</a>
         <input type="search" placeholder="Search..">
-        <a href="http://" target="_blank" rel="noopener noreferrer">Register</a>
-        <a href="http://" target="_blank" rel="noopener noreferrer">Login</a>
+        <a href="#" target="_blank" class="anchor-headline">Register</a>
+        <a href="#" target="_blank" class="anchor-headline">Login</a>
     </div>
-    {% block content %}{% endblock %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 </body>
 
 </html>
