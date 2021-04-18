@@ -1,0 +1,16 @@
+@import "base.css";
+
+hr {
+    margin: 1.3rem 3rem;
+    color: var(--border);
+}
+
+.post-header {
+    display: flex;
+    font-size: 0.7em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.post-list, .post-header {list-style: none;}
+.post .anchor-headline {font-size: 1.4em;}
