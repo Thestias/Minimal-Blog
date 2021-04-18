@@ -3,6 +3,7 @@
     --headline: #fffffe;
     --border: #121629;
     --button: #eebbc3;
+    --alt-text: #b8c1ec;
 }
 
 * {
@@ -10,7 +11,7 @@
     margin: 0;
 }
 
-@import url('https://rsms.me/inter/inter.css');
+/* @import url('https://rsms.me/inter/inter.css'); */
 html { font-family: 'Inter', sans-serif; }
 
 body {
@@ -35,10 +36,23 @@ body {
     border-style: none;
     border-bottom: 2px solid var(--border);
     padding: 2px;
+    outline: none;
 }
+
+.navbar input:focus {border-bottom: 2px solid var(--button)}
 
 main {
     max-width: 54rem;
     width: 100%;
     margin: 3rem auto;
+}
+
+footer {
+    display: flex;
+    text-transform: uppercase;
+    font-size: 0.7em;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    font-weight: 500;
 }

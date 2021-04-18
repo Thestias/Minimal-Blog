@@ -9,23 +9,29 @@
     <title></title>
 
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&display=swap" rel="stylesheet">
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&display=swap" rel="stylesheet"> -->
     {% block css %}{% endblock %}
 
 </head>
 
 <body>
     <div class="navbar">
-        <a href="#" target="_blank" class="anchor-headline">Piccolo</a>
+        <a href="{% url 'Home' %}" class="anchor-headline">Piccolo</a>
         <input type="search" placeholder="Search..">
-        <a href="#" target="_blank" class="anchor-headline">Register</a>
-        <a href="#" target="_blank" class="anchor-headline">Login</a>
+        <a href="{% url 'Register' %}" class="anchor-headline">Register</a>
+        <a href="{% url 'Login' %}" class="anchor-headline">Login</a>
     </div>
 
     <main>
         {% block content %}{% endblock %}
     </main>
+
+    <footer>
+        <p>© 2021 Piccolo</p>&nbsp;&nbsp;&nbsp;
+        <p>Credits</p>&nbsp;&nbsp;
+        <p>About</p>
+    </footer>
 </body>
 
 </html>
