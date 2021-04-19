@@ -23,7 +23,8 @@ urlpatterns = [
     path('blogup', views.upload_blog, name='UpBlog'),
 
     path('login/', auth_views.LoginView.as_view(template_name='login_register.html',
-                                                redirect_authenticated_user=True), name='Login'),
+                                                redirect_authenticated_user=True,
+                                                extra_context={'action': 'Login'}), name='Login'),
     path('logout/', auth_views.LogoutView.as_view(), name='Logout'),
 
     path('register/', views.register, name='Register'),

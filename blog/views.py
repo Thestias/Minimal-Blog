@@ -22,7 +22,7 @@ def register(request):
             return redirect('Login')
     else:
         register_form = CustomUserCreation()
-    return render(request, 'login_register.html', context={'form': register_form})
+    return render(request, 'login_register.html', context={'form': register_form, 'action': 'Register'})
 
 
 def profile(request):
