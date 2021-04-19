@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import CustomUserCreation
 from .models import Blog
 import markdown
+from mdx_gfm import GithubFlavoredMarkdownExtension
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.contrib import messages
@@ -53,7 +54,7 @@ def profile(request, user_id):
 
 def upload_blog(request):
     if request.method == 'POST':
-        md = markdown.Markdown()
+        md = markdown.Markdown(extensions=[GithubFlavoredMarkdownExtension()])
 
         uploaded_file = request.FILES['file']
         title = uploaded_file.name.replace('.md', '')
@@ -73,3 +74,8 @@ def upload_blog(request):
             blog_post.save()
 
     return render(request, 'upload_blog.html')
+
+
+def blog(request, blog_id):
+    blog_data = Blog.objects.get(id=blog_id)
+    return render(request, 'blog.html', {'blog': blog_data})

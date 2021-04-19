@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+<link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<article>
+    <div>
+        <h3>{{blog.title}}</h3>
+        <ul class="post-header">
+            <li>{{blog.creation_time}} /</li>&nbsp
+            <li>
+                <a href="#">Python</a>
+                <a href="#">HTML</a>
+                /
+            </li>&nbsp
+            <li><a href="{% url 'Profile' blog.author.id %}">Author {{blog.author}}</a></li>
+        </ul>
+    </div>
+    <hr>
+    <div>
+        {{blog.body|safe}}
+    </div>
+</article>
+
+{% endblock %}
