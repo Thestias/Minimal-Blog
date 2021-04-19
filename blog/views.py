@@ -11,7 +11,7 @@ from django.utils.text import Truncator
 
 
 def homepage(request):
-    blogs = Blog.objects.all()
+    blogs = Blog.objects.all().order_by("id").reverse()
     paginator = Paginator(blogs, 5)
 
     page_number = request.GET.get('page')
@@ -48,7 +48,7 @@ def upload_blog(request):
         file_data = request.FILES['file'].read().decode(
             'utf-8')  # read() returns a raw string
 
-        synopsis = Truncator(file_data).chars(75).strip('#')
+        synopsis = Truncator(file_data).chars(100).strip('#')
         blog_post = Blog(author=request.user, title=title,
                          body=md.convert(file_data), synopsis=synopsis)
 
