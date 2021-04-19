@@ -29,6 +29,16 @@
         {% endif %}
     </div>
 
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <b>
+            <li{% if message.tags %} class="messages-{{ message.tags }}" {% endif %}>{{ message }}</li>
+        </b>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     <main>
         {% block content %}{% endblock %}
     </main>

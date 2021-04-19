@@ -19,6 +19,13 @@ body {
     color: var(--headline)
 }
 
+.messages {
+    list-style: none;
+    text-align: center;
+    padding: 7px;
+    background-color: var(--button);
+}
+
 .anchor-headline {font-family: 'Antonio', sans-serif; color: var(--headline); font-weight: 900; text-decoration: none;}
 .anchor-headline:hover { color: var(--button)}
 
