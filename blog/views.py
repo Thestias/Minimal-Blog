@@ -36,7 +36,18 @@ def register(request):
 
 
 def profile(request):
-    return render(request, 'profile.html')
+
+    if request.method == 'POST':
+        blog_to_delete = int(request.POST.get('delete'))
+        Blog.objects.get(id=blog_to_delete).delete()
+        messages.success(request, 'Blog deleted')
+
+    blogs = Blog.objects.filter(author=request.user).order_by("id").reverse()
+    paginator = Paginator(blogs, 5)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'profile.html', {'page_obj': page_obj})
 
 
 def upload_blog(request):

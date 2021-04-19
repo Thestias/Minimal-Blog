@@ -1,10 +1,68 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+{% endblock %}
+
 {% block content %}
-
 <article>
-    <h1>Hello!</h1>
-</article>
 
+    <div class="profile-data">
+        <h2>{{request.user}}</h2>
+    </div>
+
+    <hr>
+    <ul class="post-list">
+        {% for blog in page_obj %}
+        <li>
+            <div class="post">
+                <ul class="post-header">
+                    <li>{{blog.creation_time}} /</li>&nbsp
+                    <li>
+                        <a href="#">Python</a>
+                        <a href="#">HTML</a>
+                        /
+                    </li>&nbsp
+                    <li><a href="">Author {{blog.author}} </a></li>&nbsp
+                    /&nbsp
+                    <li>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button class="del-btn" type="submit" name="delete" value="{{blog.id}}">Delete</button>
+                        </form>
+                    </li>
+                </ul>
+                <a href="#" class="anchor-headline">{{blog.title}}</a>
+                <p>
+                    {{blog.synopsis}}
+                </p>
+            </div>
+            <hr>
+        </li>
+        {% endfor %}
+    </ul>
+
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+</article>
 {% endblock %}

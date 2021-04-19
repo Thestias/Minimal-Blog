@@ -1,0 +1,9 @@
+.del-btn {
+    all: unset;
+    color: var(--button);
+    cursor: pointer;
+}
+
+.del-btn:hover {
+    color: var(--alt-text)
+}
