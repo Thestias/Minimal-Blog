@@ -3,15 +3,17 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/upblog.css' %}">
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-    crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block content %}
 
 <article>
     <h2>Upload your blog</h2>
-    <input id="fileu" type="file" accept=".md">
+    <form enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <input name="file" id="fileu" type="file" accept=".md">
+        <button class="button" type="submit">Submit</button>
+    </form>
 </article>
 
 {% endblock %}

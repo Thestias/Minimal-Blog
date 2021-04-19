@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreation
+from .models import Blog
+import markdown
+from django.core.exceptions import ValidationError
 from django.contrib import messages
 
 # Create your views here.
@@ -30,4 +33,23 @@ def profile(request):
 
 
 def upload_blog(request):
+    if request.method == 'POST':
+        md = markdown.Markdown()
+
+        uploaded_file = request.FILES['file']
+        title = uploaded_file.name.replace('.md', '')
+        file_data = request.FILES['file'].read().decode(
+            'utf-8')  # read() returns a raw string
+
+        blog_post = Blog(author=request.user, title=title,
+                         body=md.convert(file_data))
+
+        try:
+            blog_post.full_clean()
+        except ValidationError:
+            pass
+        else:
+            messages.success(request, 'Blog uploaded')
+            blog_post.save()
+
     return render(request, 'upload_blog.html')
