@@ -4,12 +4,19 @@ from .models import Blog
 import markdown
 from django.core.exceptions import ValidationError
 from django.contrib import messages
+from django.core.paginator import Paginator
+from django.utils.text import Truncator
 
 # Create your views here.
 
 
 def homepage(request):
-    return render(request, 'homepage.html')
+    blogs = Blog.objects.all()
+    paginator = Paginator(blogs, 5)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'homepage.html', {'page_obj': page_obj})
 
 
 def register(request):
@@ -41,8 +48,9 @@ def upload_blog(request):
         file_data = request.FILES['file'].read().decode(
             'utf-8')  # read() returns a raw string
 
+        synopsis = Truncator(file_data).chars(75).strip('#')
         blog_post = Blog(author=request.user, title=title,
-                         body=md.convert(file_data))
+                         body=md.convert(file_data), synopsis=synopsis)
 
         try:
             blog_post.full_clean()

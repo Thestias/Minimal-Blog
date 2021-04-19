@@ -9,28 +9,46 @@
 <article>
 
     <ul class="post-list">
+        {% for blog in page_obj %}
         <li>
             <div class="post">
                 <ul class="post-header">
-                    <li>20 May 2021 /</li>&nbsp
+                    <li>{{blog.creation_time}} /</li>&nbsp
                     <li>
                         <a href="#">Python</a>
                         <a href="#">HTML</a>
                         /
                     </li>&nbsp
-                    <li><a href="">Author Conra</a></li>
+                    <li><a href="">Author {{blog.author}}</a></li>
                 </ul>
-                <a href="#" class="anchor-headline">The problems of drinking too much water.</a>
+                <a href="#" class="anchor-headline">{{blog.title}}</a>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur deserunt dolores impedit officia
-                    beatae. Non repudiandae saepe voluptatibus eum distinctio in sint assumenda consequatur beatae
-                    soluta! Quae nemo rerum et.
+                    {{blog.synopsis}}
                 </p>
             </div>
             <hr>
         </li>
+        {% endfor %}
     </ul>
 
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 
 </article>
 {% endblock %}
