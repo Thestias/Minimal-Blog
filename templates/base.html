@@ -21,7 +21,7 @@
         <input type="search" placeholder="Search..">
         {% if user.is_authenticated %}
         <a href="{% url 'UpBlog' %}" class="anchor-headline">New Post</a>
-        <a href="{% url 'Profile' %}" class="anchor-headline">Profile</a>
+        <a href="{% url 'Profile' user.id %}" class="anchor-headline">Profile</a>
         <a href="{% url 'Logout' %}" class="anchor-headline">Logout</a>
         {% else %}
         <a href="{% url 'Register' %}" class="anchor-headline">Register</a>

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import CustomUserCreation
 from .models import Blog
 import markdown
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -35,19 +36,19 @@ def register(request):
     return render(request, 'login_register.html', context={'form': register_form, 'action': 'Register'})
 
 
-def profile(request):
+def profile(request, user_id):
 
-    if request.method == 'POST':
+    if request.method == 'POST' and user_id == request.user.id:
         blog_to_delete = int(request.POST.get('delete'))
         Blog.objects.get(id=blog_to_delete).delete()
         messages.success(request, 'Blog deleted')
 
-    blogs = Blog.objects.filter(author=request.user).order_by("id").reverse()
+    blogs = Blog.objects.filter(author=user_id).order_by("id").reverse()
     paginator = Paginator(blogs, 5)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'profile.html', {'page_obj': page_obj})
+    return render(request, 'profile.html', {'page_obj': page_obj, 'requested_user': User.objects.get(id=user_id)})
 
 
 def upload_blog(request):

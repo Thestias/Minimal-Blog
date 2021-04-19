@@ -11,7 +11,7 @@
 <article>
 
     <div class="profile-data">
-        <h2>{{request.user}}</h2>
+        <h2>{{requested_user}}</h2>
     </div>
 
     <hr>
@@ -26,7 +26,8 @@
                         <a href="#">HTML</a>
                         /
                     </li>&nbsp
-                    <li><a href="">Author {{blog.author}} </a></li>&nbsp
+                    <li><a href="{% url 'Profile' blog.author.id %}">Author {{blog.author}} </a></li>&nbsp
+                    {% if user.id == blog.author.id %}
                     /&nbsp
                     <li>
                         <form action="" method="post">
@@ -34,6 +35,7 @@
                             <button class="del-btn" type="submit" name="delete" value="{{blog.id}}">Delete</button>
                         </form>
                     </li>
+                    {% endif %}
                 </ul>
                 <a href="#" class="anchor-headline">{{blog.title}}</a>
                 <p>

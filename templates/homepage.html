@@ -19,7 +19,7 @@
                         <a href="#">HTML</a>
                         /
                     </li>&nbsp
-                    <li><a href="">Author {{blog.author}}</a></li>
+                    <li><a href="{% url 'Profile' blog.author.id %}">Author {{blog.author}}</a></li>
                 </ul>
                 <a href="#" class="anchor-headline">{{blog.title}}</a>
                 <p>
