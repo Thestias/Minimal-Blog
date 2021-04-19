@@ -9,3 +9,5 @@ article input {
     border: 2px solid var(--button);
     padding: 20px;
 }
+
+.button {display: block; margin: 1rem auto;}
