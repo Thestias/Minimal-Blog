@@ -37,7 +37,7 @@ body {
 }
 
 /* Search bar */
-.navbar input {
+.input {
     background-color: var(--background);
     color: var(--headline);
     border-style: none;
@@ -46,7 +46,7 @@ body {
     outline: none;
 }
 
-.navbar input:focus {border-bottom: 2px solid var(--button)}
+.input:focus {border-bottom: 2px solid var(--button)}
 
 main {
     max-width: 54rem;
