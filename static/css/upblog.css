@@ -4,10 +4,28 @@ article {
 
 article h2 {margin-bottom: 2rem;}
 
-article input {
+#fileu {
     background-color: var(--background);
     border: 2px solid var(--button);
     padding: 20px;
 }
 
 .button {display: block; margin: 1rem auto;}
+
+.categories-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 7px;
+    margin: 2rem auto;
+    width: auto;
+    border-bottom: 2px solid var(--border);
+    font-weight: 900;
+}
+
+.categories-wrapper input {
+    height: inherit;
+}
+
+.categories-wrapper li {list-style: none;}
+
+.create-cat {margin: 2rem auto}

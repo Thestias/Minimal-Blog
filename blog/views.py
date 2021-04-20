@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreation
-from .models import Blog
+from .models import Blog, Category
 import markdown
 from mdx_gfm import GithubFlavoredMarkdownExtension
 from django.contrib.auth.models import User
@@ -13,7 +13,8 @@ from django.utils.text import Truncator
 
 
 def homepage(request):
-    blogs = Blog.objects.all().order_by("id").reverse()
+    blogs = Blog.objects.all().prefetch_related(
+        'categories').order_by("id").reverse()
     paginator = Paginator(blogs, 5)
 
     page_number = request.GET.get('page')
@@ -53,27 +54,51 @@ def profile(request, user_id):
 
 
 def upload_blog(request):
+    available_categories = Category.objects.all()
+
     if request.method == 'POST':
         md = markdown.Markdown(extensions=[GithubFlavoredMarkdownExtension()])
 
+        '''
+        This section reads the file, the read() method returns a raw string that next its converted
+        to UTF-8 encoding
+        '''
         uploaded_file = request.FILES['file']
-        title = uploaded_file.name.replace('.md', '')
-        file_data = request.FILES['file'].read().decode(
-            'utf-8')  # read() returns a raw string
+        file_data = request.FILES['file'].read().decode('utf-8')
 
+        '''
+        Creating some variables for the Blog record creation and creating the blog
+        '''
+        title = uploaded_file.name.replace('.md', '')
         synopsis = Truncator(file_data).chars(100).strip('#')
-        blog_post = Blog(author=request.user, title=title,
-                         body=md.convert(file_data), synopsis=synopsis)
+        blog_post = Blog(author=request.user, title=title, body=md.convert(file_data), synopsis=synopsis)
+
+        '''
+        This section loops trough the categories in the request.POST and if they dont exist it saves them,
+        then wheter they exist or have been just created it saves the id of them in categories_to_add.
+        '''
+        categories_to_add = []
+        for category in request.POST.getlist('category'):
+            category = category.capitalize()
+            check_category = Category.objects.filter(name=category).exists()
+            if check_category:
+                categories_to_add.append(Category.objects.get(name=category).id)
+            else:
+                if len(category) != 0:
+                    Category(name=category).save()
+                    categories_to_add.append(Category.objects.get(name=category).id)
 
         try:
             blog_post.full_clean()
         except ValidationError:
             pass
         else:
-            messages.success(request, 'Blog uploaded')
             blog_post.save()
+            # Adding the categories to the post
+            blog_post.categories.add(*categories_to_add)
+            messages.success(request, 'Blog uploaded')
 
-    return render(request, 'upload_blog.html')
+    return render(request, 'upload_blog.html', {'categories': available_categories})
 
 
 def blog(request, blog_id):

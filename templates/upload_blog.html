@@ -11,7 +11,22 @@
     <h2>Upload your blog</h2>
     <form enctype="multipart/form-data" method="post">
         {% csrf_token %}
-        <input name="file" id="fileu" type="file" accept=".md">
+        <input name="file" id="fileu" type="file" accept=".md" required>
+
+        <div class="categories-wrapper">
+            {% for category in categories %}
+            <li>
+                <input type="checkbox" name="category" value="{{category.name}}" id="{{category.name}}">
+                <label for="{{category.name}}">{{category.name}}</label>
+            </li>
+            {% endfor %}
+        </div>
+
+        <div class="create-cat">
+            <h4>Add your own categories</h4>
+            <input class="input" type="text" name="category" id="">
+        </div>
+
         <button class="button" type="submit">Submit</button>
     </form>
 </article>
