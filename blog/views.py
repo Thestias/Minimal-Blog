@@ -8,6 +8,8 @@ from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.utils.text import Truncator
+from django.db.models import Q
+
 
 # Create your views here.
 
@@ -104,3 +106,27 @@ def upload_blog(request):
 def blog(request, blog_id):
     blog_data = Blog.objects.get(id=blog_id)
     return render(request, 'blog.html', {'blog': blog_data})
+
+
+def search(request):
+    query_data = request.POST.getlist('search')
+
+    for query in query_data:
+        lookup = Q(title__icontains=query)
+
+    '''
+    In order, this part does this:
+    1- Filters all blogs for the lookup
+    2- Discards the repeated
+    3- Prefetchs the related categories
+    4- Orders the blog's by ID
+    5- It reverses the order
+    '''
+    results = Blog.objects.filter(lookup).distinct().prefetch_related(
+        'categories').order_by("id").reverse()
+
+    paginator = Paginator(results, 5)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'homepage.html', {'page_obj': page_obj, 'header': 'Search results.'})

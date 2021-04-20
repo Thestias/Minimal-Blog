@@ -67,7 +67,7 @@ footer {
     margin-top: 3rem;
 }
 
-.button {
+.button, .search-button {
     color: inherit;
     font-size: inherit;
     font-weight: inherit;
@@ -83,3 +83,18 @@ footer {
     cursor: pointer;
     color: var(--background)
 }
+
+.search-button {
+    all: unset;
+    background-color: var(--background);
+}
+
+.search-button img {
+    height: 15px;
+    width: 15px;
+    filter: invert(100%) sepia(64%) saturate(337%) hue-rotate(14deg) brightness(111%) contrast(104%); /* Equeals to the headline color */
+}
+
+.search-button img:hover{filter: invert(78%) sepia(7%) saturate(1125%) hue-rotate(302deg) brightness(104%) contrast(87%);}
+
+.search-button:hover {cursor: pointer;}

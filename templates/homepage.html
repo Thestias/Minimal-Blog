@@ -8,6 +8,12 @@
 {% block content %}
 <article>
 
+    <!-- This is for the Search functionality -->
+    {% if header %}
+    <h2>{{header}}</h2>
+    <hr>
+    {% endif %}
+
     <ul class="post-list">
         {% for blog in page_obj %}
         <li>
