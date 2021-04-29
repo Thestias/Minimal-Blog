@@ -22,8 +22,9 @@
                 <ul class="post-header">
                     <li>{{blog.creation_time}} /</li>&nbsp
                     <li>
-                        <a href="#">Python</a>
-                        <a href="#">HTML</a>
+                        {% for category in blog.categories.all %}
+                        <a href="#">{{category}}</a>
+                        {% endfor %}
                         /
                     </li>&nbsp
                     <li><a href="{% url 'Profile' blog.author.id %}">Author {{blog.author}} </a></li>&nbsp
@@ -37,7 +38,7 @@
                     </li>
                     {% endif %}
                 </ul>
-                <a href="#" class="anchor-headline">{{blog.title}}</a>
+                <a href="{% url 'Blog' blog.id %}" class="anchor-headline">{{blog.title}}</a>
                 <p>
                     {{blog.synopsis}}
                 </p>

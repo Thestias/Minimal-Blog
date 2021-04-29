@@ -47,7 +47,8 @@ def profile(request, user_id):
         Blog.objects.get(id=blog_to_delete).delete()
         messages.success(request, 'Blog deleted')
 
-    blogs = Blog.objects.filter(author=user_id).order_by("id").reverse()
+    blogs = Blog.objects.filter(author=user_id).prefetch_related(
+        'categories').order_by("id").reverse()
     paginator = Paginator(blogs, 5)
 
     page_number = request.GET.get('page')
