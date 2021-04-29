@@ -1,0 +1,19 @@
+p {
+    margin: 0;
+    text-indent: 3ch;
+  }
+  
+  p.pilcrow {
+     text-indent: 0;
+     display: inline;
+  }
+  p.pilcrow + p.pilcrow::before {
+    content: " ¶ ";
+  }
+
+.content * {
+    margin: revert;
+    padding: revert;
+}
+
+h1, h2, h3, h4 { text-decoration: solid underline var(--button);}
