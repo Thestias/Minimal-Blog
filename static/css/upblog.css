@@ -46,3 +46,8 @@ article h2 {margin-bottom: 2rem;}
     border: 3px solid var(--border);
     padding: 15px;
 }
+
+.markdownx-preview * {
+    padding: revert;
+    margin: revert;
+}
