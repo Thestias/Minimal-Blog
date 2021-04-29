@@ -3,6 +3,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/upblog.css' %}">
+<script src="{% static 'js/upload_blog.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -27,6 +28,10 @@
             <input class="input" type="text" name="category" id="">
         </div>
 
+
+        {{ form }}
+
+        {{ form.media }}
         <button class="button" type="submit">Submit</button>
     </form>
 </article>

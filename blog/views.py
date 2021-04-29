@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.utils.text import Truncator
 from django.db.models import Q
-
+from .forms import MarkdownX
 
 # Create your views here.
 
@@ -56,17 +56,14 @@ def profile(request, user_id):
 
 
 def upload_blog(request):
+    mark = MarkdownX()
     available_categories = Category.objects.all()
 
     if request.method == 'POST':
         md = markdown.Markdown(extensions=[GithubFlavoredMarkdownExtension()])
 
-        '''
-        This section reads the file, the read() method returns a raw string that next its converted
-        to UTF-8 encoding
-        '''
         uploaded_file = request.FILES['file']
-        file_data = request.FILES['file'].read().decode('utf-8')
+        file_data = request.POST.getlist('markdown')[0]
 
         '''
         Creating some variables for the Blog record creation and creating the blog
@@ -81,7 +78,19 @@ def upload_blog(request):
         '''
         categories_to_add = []
         for category in request.POST.getlist('category'):
-            category = category.capitalize()
+            '''
+            If the name of a category is lower or equal than 4 then it makes all chars uppercase(example CSS, HTML)
+            if the lenght of the category name is zero and the list of categories is 1 then it adds a default category
+            else it justs capitalizes the category name
+            '''
+            if len(category) <= 4 < 0:
+                category = category.upper()
+            elif len(category) == 0 and len(request.POST.getlist('category')) == 1:
+                categories_to_add.append(Category.objects.get(name='Programming').id)
+                continue
+            else:
+                category = category.capitalize()
+
             check_category = Category.objects.filter(name=category).exists()
             if check_category:
                 categories_to_add.append(Category.objects.get(name=category).id)
@@ -100,7 +109,7 @@ def upload_blog(request):
             blog_post.categories.add(*categories_to_add)
             messages.success(request, 'Blog uploaded')
 
-    return render(request, 'upload_blog.html', {'categories': available_categories})
+    return render(request, 'upload_blog.html', {'categories': available_categories, 'form': mark})
 
 
 def blog(request, blog_id):

@@ -40,6 +40,7 @@ PREINSTALED_APPS = [
 ]
 
 SITE_APPS = [
+    'markdownx',
     'blog'
 ]
 

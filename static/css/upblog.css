@@ -29,3 +29,20 @@ article h2 {margin-bottom: 2rem;}
 .categories-wrapper li {list-style: none;}
 
 .create-cat {margin: 2rem auto}
+
+/* Modifiying the MarkdownX default style */
+
+#id_markdown {
+    width: 100%;
+    height: 25em;
+}
+
+.markdownx-preview {
+    text-align: center;
+    box-sizing: border-box;
+    margin-top: 2em;
+    width: 100%;
+    min-height: 15em;
+    border: 3px solid var(--border);
+    padding: 15px;
+}
