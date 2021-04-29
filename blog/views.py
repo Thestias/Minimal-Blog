@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreation
 from .models import Blog, Category
-import markdown
-from mdx_gfm import GithubFlavoredMarkdownExtension
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.contrib import messages
@@ -10,6 +8,8 @@ from django.core.paginator import Paginator
 from django.utils.text import Truncator
 from django.db.models import Q
 from .forms import MarkdownX
+from markdownx.utils import markdownify
+
 
 # Create your views here.
 
@@ -60,7 +60,6 @@ def upload_blog(request):
     available_categories = Category.objects.all()
 
     if request.method == 'POST':
-        md = markdown.Markdown(extensions=[GithubFlavoredMarkdownExtension()])
 
         uploaded_file = request.FILES['file']
         file_data = request.POST.getlist('markdown')[0]
@@ -70,7 +69,7 @@ def upload_blog(request):
         '''
         title = uploaded_file.name.replace('.md', '')
         synopsis = Truncator(file_data).chars(100).strip('#')
-        blog_post = Blog(author=request.user, title=title, body=md.convert(file_data), synopsis=synopsis)
+        blog_post = Blog(author=request.user, title=title, body=markdownify(file_data), synopsis=synopsis)
 
         '''
         This section loops trough the categories in the request.POST and if they dont exist it saves them,
